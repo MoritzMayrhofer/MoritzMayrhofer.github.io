@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nachhaltigkeits-App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin: 0 10px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        h1, h2, h3 {
+            color: #4CAF50;
+        }
+
+        section {
+            background-color: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 10px; /* Abstand zwischen den Buttons */
+        }
+
+        button:disabled {
+            background-color: #9e9e9e;
+            cursor: not-allowed;
+        }
+
+        button:hover:not(:disabled) {
+            background-color: #45a049;
+        }
+
+        form {
+            margin-top: 10px; /* Abstand zwischen Formular und Buttons */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Nachhaltigkeits-App</h1>
+        <nav>
+            <ul>
+                <li><a href="#home">Startseite</a></li>
+                <li><a href="#profile">Profil</a></li>
+                <li><a href="#activities">Aktivitäten</a></li>
+                <li><a href="#leaderboard">Punkte</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="home">
+            <h2>Willkommen zur Nachhaltigkeits-App!</h2>
+            <p>Hier können Sie Punkte für umweltfreundliche Aktionen sammeln und Ihren ökologischen Fußabdruck reduzieren.</p>
+        </section>
+
+        <section id="profile">
+            <h2>Profil</h2>
+            <p>Name: <span id="userName">Moritz Mayrhofer</span></p>
+            <p>Gesammelte Punkte: <span id="userPoints">1500</span></p>
+        </section>
+
+        <section id="activities">
+            <h2>Aktivitäten</h2>
+            <ul>
+                <li>
+                    <h3>Öffis benutzen</h3>
+                    <p>Reduzieren Sie Ihren CO2-Austoß und nutzen Züge und Busse.</p>
+                    <form id="uploadForm1" enctype="multipart/form-data">
+                        <label for="receiptUpload1">Rechnung hochladen:</label>
+                        <input type="file" id="receiptUpload1" accept="image/*" onchange="enableButton(1)">
+                    </form>
+                    <p id="uploadStatus1"></p>
+                    <button id="addPointsButton1" onclick="uploadReceipt(1, 50)" disabled>Hochladen und Punkte hinzufügen (50)</button>
+                </li>
+                <li>
+                    <h3>Regional einkaufen</h3>
+                    <p>Unterstützen Sie regionale und saisonale Geschäfte und verzichten Sie auf spanische Erdbeeren.</p>
+                    <form id="uploadForm2" enctype="multipart/form-data">
+                        <label for="receiptUpload2">Rechnung hochladen:</label>
+                        <input type="file" id="receiptUpload2" accept="image/*" onchange="enableButton(2)">
+                    </form>
+                    <p id="uploadStatus2"></p>
+                    <button id="addPointsButton2" onclick="uploadReceipt(2, 20)" disabled>Hochladen und Punkte hinzufügen (20)</button>
+                </li>
+                <li>
+                    <h3>Müllvermeidung und Recycling</h3>
+                    <p>Trennen und recyceln Sie Ihren Abfall.</p>
+                    <form id="uploadForm3" enctype="multipart/form-data">
+                        <label for="receiptUpload3">Rechnung hochladen:</label>
+                        <input type="file" id="receiptUpload3" accept="image/*" onchange="enableButton(3)">
+                    </form>
+                    <p id="uploadStatus3"></p>
+                    <button id="addPointsButton3" onclick="uploadReceipt(3, 75)" disabled>Hochladen und Punkte hinzufügen (75)</button>
+                </li>
+                <li>
+                    <h3>Second-Hand</h3>
+                    <p>Nutzen Sie Dienste wie Willhaben und fördern den 2nd-Hand Markt.</p>
+                    <form id="uploadForm4" enctype="multipart/form-data">
+                        <label for="receiptUpload4">Rechnung hochladen:</label>
+                        <input type="file" id="receiptUpload4" accept="image/*" onchange="enableButton(4)">
+                    </form>
+                    <p id="uploadStatus4"></p>
+                    <button id="addPointsButton4" onclick="uploadReceipt(4, 120)" disabled>Hochladen und Punkte hinzufügen (120)</button>
+                </li>
+            </ul>
+        </section>
+
+        <section id="leaderboard">
+            <h2>Punkte</h2>
+            <p>Aktuelle Punkte: <span id="totalPoints">1500</span></p>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Nachhaltigkeits-App. Alle Rechte Hr. Mayrhofer vorbehalten.</p>
+    </footer>
+
+    <script>
+        let totalPoints = 1500;
+
+        function addPoints(points) {
+            totalPoints += points;
+            document.getElementById('userPoints').innerText = totalPoints;
+            document.getElementById('totalPoints').innerText = totalPoints;
+        }
+
+        function enableButton(id) {
+            document.getElementById('addPointsButton' + id).disabled = false;
+        }
+
+        function uploadReceipt(id, points) {
+            const input = document.getElementById('receiptUpload' + id);
+            const status = document.getElementById('uploadStatus' + id);
+
+            if (input.files.length === 0) {
+                status.innerText = 'Bitte wählen Sie eine Datei aus.';
+                return;
+            }
+
+            const file = input.files[0];
+            const formData = new FormData();
+            formData.append('receipt', file);
+
+            // Hier würde normalerweise der Fetch-Aufruf zum Hochladen der Datei an den Server stehen
+
+            // Simulieren wir hier den Erfolg und fügen die Punkte hinzu
+            setTimeout(() => {
+                status.innerText = 'Rechnung erfolgreich hochgeladen.';
+                addPoints(points);
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
