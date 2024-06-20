@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoTracker-Shop</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #eafbea;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+        }
+
+        #topbar {
+            background: #4caf50;
+            color: #fff;
+            padding: 30px 0;
+            text-align: center;
+            font-size: 2.5em;
+        }
+
+        .content {
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .shop-item, #pointsDisplay {
+            background: #fff;
+            margin: 10px;
+            padding: 20px;
+            border: #ccc 1px solid;
+            box-sizing: border-box;
+            text-align: center;
+            flex: 1 1 22%;
+        }
+
+            .shop-item h3, #pointsDisplay h2 {
+                margin-top: 0;
+            }
+
+            .shop-item p, #pointsDisplay p {
+                margin: 10px 0;
+            }
+
+            .shop-item .points, #pointsDisplay .points {
+                font-weight: bold;
+            }
+
+            .shop-item .btn {
+                display: block;
+                width: 100%;
+                text-align: center;
+                padding: 10px;
+                background: #4caf50;
+                color: #fff;
+                text-decoration: none;
+                border-radius: 5px;
+            }
+
+                .shop-item .btn:disabled {
+                    background: #ccc;
+                    cursor: not-allowed;
+                }
+    </style>
+</head>
+<body>
+    <div id="topbar">
+        EcoTracker-Shop
+    </div>
+
+    <section class="content container">
+        <div id="pointsDisplay">
+            <h2>Verfügbare Punkte</h2>
+            <p class="points"><span id="points">1500</span></p>
+        </div>
+        <div class="shop-item">
+            <h3>10% Rabatt</h3>
+            <p class="points">100 Punkte</p>
+            <button class="btn" onclick="redeemPoints(100)">Eintauschen</button>
+        </div>
+        <div class="shop-item">
+            <h3>20% Rabatt</h3>
+            <p class="points">200 Punkte</p>
+            <button class="btn" onclick="redeemPoints(200)">Eintauschen</button>
+        </div>
+        <div class="shop-item">
+            <h3>30% Rabatt</h3>
+            <p class="points">300 Punkte</p>
+            <button class="btn" onclick="redeemPoints(300)">Eintauschen</button>
+        </div>
+        <div class="shop-item">
+            <h3>50% Rabatt</h3>
+            <p class="points">500 Punkte</p>
+            <button class="btn" onclick="redeemPoints(500)">Eintauschen</button>
+        </div>
+        <div class="shop-item">
+            <h3>Einzelfahrt Ticket</h3>
+            <p class="points">150 Punkte</p>
+            <button class="btn" onclick="redeemPoints(150, 'Einzelfahrt')">Eintauschen</button>
+        </div>
+        <div class="shop-item">
+            <h3>Tagesticket</h3>
+            <p class="points">300 Punkte</p>
+            <button class="btn" onclick="redeemPoints(300, 'Tagesticket')">Eintauschen</button>
+        </div>
+        <div class="shop-item">
+            <h3>Wochenticket</h3>
+            <p class="points">1000 Punkte</p>
+            <button class="btn" onclick="redeemPoints(1000, 'Wochenticket')">Eintauschen</button>
+        </div>
+        <div class="shop-item">
+            <h3>Baum pflanzen</h3>
+            <p class="points">500 Punkte</p>
+            <button class="btn" onclick="redeemPoints(500, 'Baum')">Eintauschen</button>
+        </div>
+        <div class="shop-item">
+            <h3>Recycling-Programm unterstützen</h3>
+            <p class="points">800 Punkte</p>
+            <button class="btn" onclick="redeemPoints(800, 'Recycling')">Eintauschen</button>
+        </div>
+        <div class="shop-item">
+            <h3>Nachhaltige Produkte kaufen</h3>
+            <p class="points">1200 Punkte</p>
+            <button class="btn" onclick="redeemPoints(1200, 'Nachhaltig')">Eintauschen</button>
+        </div>
+        <div class="shop-item">
+            <h3>Elektroauto mieten</h3>
+            <p class="points">3000 Punkte</p>
+            <button class="btn" onclick="redeemPoints(3000, 'Elektroauto')">Eintauschen</button>
+        </div>
+        <div class="shop-item">
+            <h3>Bio-Essen Gutschein</h3>
+            <p class="points">400 Punkte</p>
+            <button class="btn" onclick="redeemPoints(400, 'Bio-Essen')">Eintauschen</button>
+        </div>
+        <div class="shop-item">
+            <h3>Fahrrad kaufen</h3>
+            <p class="points">5000 Punkte</p>
+            <button class="btn" onclick="redeemPoints(5000, 'Fahrrad')">Eintauschen</button>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 EcoTracker-Shop. Alle Rechte vorbehalten.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Beispielpunkte (in einer echten Anwendung von einem Backend abrufen)
+        let points = 1500;
+
+        // Funktion zum Generieren eines zufälligen Rabattcodes
+        function generateDiscountCode() {
+            let code = '';
+            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            for (let i = 0; i < 10; i++) {
+                code += characters.charAt(Math.floor(Math.random() * characters.length));
+            }
+            return code;
+        }
+
+        // Funktion zum Einlösen von Punkten
+        function redeemPoints(cost, rewardType = null) {
+            if (points >= cost) {
+                points -= cost;
+                document.getElementById('points').innerText = points;
+                const rewardMessage = getRewardMessage(rewardType);
+                alert(rewardMessage);
+            } else {
+                alert('Nicht genügend Punkte!');
+            }
+        }
+
+        // Funktion zur Nachrichtenerstellung für verschiedene Belohnungstypen
+        function getRewardMessage(rewardType) {
+            const discountCode = generateDiscountCode();
+            switch (rewardType) {
+                case 'Einzelfahrt':
+                case 'Tagesticket':
+                case 'Wochenticket':
+                    return `Dein ${rewardType} Code: ${discountCode}`;
+                case 'Baum':
+                    return `Ein Baum wird für dich gepflanzt. Code: ${discountCode}`;
+                case 'Recycling':
+                    return `Du unterstützt ein Recycling-Programm. Code: ${discountCode}`;
+                case 'Nachhaltig':
+                    return `Du kaufst nachhaltige Produkte. Code: ${discountCode}`;
+                case 'Elektroauto':
+                    return `Du kannst ein Elektroauto für einen Tag mieten. Code: ${discountCode}`;
+                case 'Bio-Essen':
+                    return `Genieße ein Bio-Essen mit diesem Gutschein. Code: ${discountCode}`;
+                case 'Fahrrad':
+                    return `Hol dir ein umweltfreundliches Fahrrad. Code: ${discountCode}`;
+                default:
+                    return `Dein Rabattcode: ${discountCode}`;
+            }
+        }
+    </script>
+</body>
+</html>
