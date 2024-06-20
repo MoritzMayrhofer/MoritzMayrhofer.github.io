@@ -46,10 +46,14 @@
             padding: 20px;
         }
 
-        h1, h2, h3 {
+        h2, h3 {
             color: #4CAF50;
         }
-
+		
+		h1{
+			color: white;
+		}
+		
         section {
             background-color: white;
             padding: 20px;
@@ -85,7 +89,7 @@
 </head>
 <body>
     <header>
-        <h1 style= "color: #FFFFFF>EcoTracker</h1>
+        <h1>EcoTracker</h1>
         <nav>
             <ul>
                 <li><a href="#home">Startseite</a></li>
@@ -162,7 +166,7 @@
         
         <section id="shop">
             <h2>Online-Shop</h2>
-            <p href="shop.html">Link zum Online-Shop</p>
+            <p> <a href="shop.html" style="color: #4CAF50" target=_blank>Link zum Online-Shop</a></p>
         </section>
     </main>
 
@@ -196,9 +200,6 @@
             const formData = new FormData();
             formData.append('receipt', file);
 
-            // Hier würde normalerweise der Fetch-Aufruf zum Hochladen der Datei an den Server stehen
-
-            // Simulieren wir hier den Erfolg und fügen die Punkte hinzu
             setTimeout(() => {
                 status.innerText = 'Rechnung erfolgreich hochgeladen.';
                 addPoints(points);
